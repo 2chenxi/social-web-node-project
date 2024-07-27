@@ -1,0 +1,30 @@
+{
+  "name": "social-web-node-project",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web server for the social application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2chenxi/social-web-node-project.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP",
+    "Web",
+    "Development"
+  ],
+  "author": "Chenxi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2chenxi/social-web-node-project/issues"
+  },
+  "homepage": "https://github.com/2chenxi/social-web-node-project#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
