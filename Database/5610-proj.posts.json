@@ -1,0 +1,79 @@
+{
+    "posts": [
+      {
+        "user": "64a3b2d5f5e8a23456789012",
+        "content": "Just finished a great book on machine learning. Highly recommend it to anyone interested in AI!",
+        "images": [
+          "https://example.com/images/book-cover.jpg"
+        ],
+        "likes": [
+          "64a3b2d5f5e8a23456789013",
+          "64a3b2d5f5e8a23456789014"
+        ],
+        "comments": [
+          {
+            "user": "64a3b2d5f5e8a23456789013",
+            "content": "Thanks for the recommendation! What's the title?",
+            "createdAt": {"$date": "2023-07-04T14:35:00Z"}
+          },
+          {
+            "user": "64a3b2d5f5e8a23456789014",
+            "content": "I've been looking for a good ML book. Could you share more details?",
+            "createdAt": {"$date": "2023-07-04T15:10:00Z"}
+          }
+        ],
+        "shareCount": 5,
+        "createdAt": {"$date": "2023-07-04T12:30:00Z"},
+        "updatedAt": {"$date": "2023-07-04T15:10:00Z"}
+      },
+      {
+        "user": "64a3b2d5f5e8a23456789015",
+        "content": "Beautiful sunset at the beach today! 🌅",
+        "images": [
+          "https://example.com/images/sunset1.jpg",
+          "https://example.com/images/sunset2.jpg"
+        ],
+        "likes": [
+          "64a3b2d5f5e8a23456789016",
+          "64a3b2d5f5e8a23456789017",
+          "64a3b2d5f5e8a23456789018"
+        ],
+        "comments": [
+          {
+            "user": "64a3b2d5f5e8a23456789016",
+            "content": "Wow, absolutely stunning!",
+            "createdAt": {"$date": "2023-07-05T19:45:00Z"}
+          }
+        ],
+        "shareCount": 10,
+        "createdAt": {"$date": "2023-07-05T19:30:00Z"},
+        "updatedAt": {"$date": "2023-07-05T19:45:00Z"}
+      },
+      {
+        "user": "64a3b2d5f5e8a23456789019",
+        "content": "Just launched my new website! Check it out and let me know what you think.",
+        "images": [
+          "https://example.com/images/website-screenshot.jpg"
+        ],
+        "likes": [
+          "64a3b2d5f5e8a2345678901a",
+          "64a3b2d5f5e8a2345678901b"
+        ],
+        "comments": [
+          {
+            "user": "64a3b2d5f5e8a2345678901a",
+            "content": "Looks great! Love the design.",
+            "createdAt": {"$date": "2023-07-06T10:15:00Z"}
+          },
+          {
+            "user": "64a3b2d5f5e8a2345678901b",
+            "content": "Congratulations on the launch!",
+            "createdAt": {"$date": "2023-07-06T10:30:00Z"}
+          }
+        ],
+        "shareCount": 3,
+        "createdAt": {"$date": "2023-07-06T09:00:00Z"},
+        "updatedAt": {"$date": "2023-07-06T10:30:00Z"}
+      }
+    ]
+  }

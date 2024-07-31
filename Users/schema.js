@@ -51,22 +51,32 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
     followers: [{
-      type: String,
+      type: mongoose.Types.ObjectId,
       default: '',
       trim: true
     }],
     following: [{
-      type: String,
+      type: mongoose.Types.ObjectId,
       default: '',
       trim: true
     }],
     posts: [{
-      type: String,
+      type: mongoose.Types.ObjectId,
       default: '',
       trim: true
     }],
     likes: [{
-      type: String,
+      type: mongoose.Types.ObjectId,
+      default: '',
+      trim: true
+    }],
+    reviews: [{
+      type: mongoose.Types.ObjectId,
+      default: '',
+      trim: true
+    }],
+    comments: [{
+      type: mongoose.Types.ObjectId,
       default: '',
       trim: true
     }],
