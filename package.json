@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "social-web-node-project",
   "version": "1.0.0",
   "description": "Node.js HTTP Web server for the social application",
