@@ -1,12 +1,10 @@
-{
-  "users": [
-    {
-      "username": "john_doe",
+[   {
+      "username": "imwinter",
       "email": "john.doe@example.com",
       "password": "hashedpassword123",
-      "firstName": "John",
-      "lastName": "Doe",
-      "profilePicture": "https://example.com/profiles/john_doe.jpg",
+      "firstName": "Winter",
+      "lastName": "Kim",
+      "profilePicture": "/Images/winter.jpg",
       "coverPhoto": "https://example.com/covers/john_doe_cover.jpg",
       "bio": "Software developer and tech enthusiast",
       "location": "New York, NY",
@@ -141,4 +139,3 @@
       "updatedAt": {"$date": "2023-06-27T20:30:00Z"}
     }
   ]
-}
