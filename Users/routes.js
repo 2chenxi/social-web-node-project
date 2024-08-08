@@ -5,10 +5,12 @@ export default function UserRoutes(app) {
     const user = await dao.createUser(req.body);
     res.json(user);
   };
+
   const deleteUser = async (req, res) => {
     const status = await dao.deleteUser(req.params.userId);
     res.json(status);
    };
+
   const findAllUsers = async (req, res) => { 
     const { name } = req.query;
 
@@ -21,10 +23,25 @@ export default function UserRoutes(app) {
     const users = await dao.findAllUsers();
     res.json(users);
   };
-  // const findUserById = async (req, res) => {
-  //   const user = await dao.findUserById(req.params.userId);
-  //   res.json(user);
-  //  };
+
+  const findUserById = async (req, res) => {
+    const user = await dao.findUserById(req.params.userId);
+    res.json(user);
+   };
+
+  const findUsersFollowings = async (req, res) => {
+    try {
+      const user = await dao.findUserById(req.params.userId).populate('following', 'username profilePicture');
+      console.log(user);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(user.following);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   const updateUser = async (req, res) => {
     const { userId } = req.params;
     const status = await dao.updateUser(userId, req.body);
@@ -70,7 +87,8 @@ export default function UserRoutes(app) {
   
   app.post("/api/users", createUser);
   app.get("/api/users", findAllUsers);
-  // app.get("/api/users/:userId", findUserById);
+  app.get("/api/users/:userId", findUserById);
+  app.get("/api/users/:userId/followings", findUsersFollowings);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
   app.post("/api/users/signup", signup);

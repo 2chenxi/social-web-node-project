@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+// import imageSchema from "../Imgs/schema.js";
 
 const PostSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'UserModel',
     required: true
   },
   content: {
@@ -12,22 +13,17 @@ const PostSchema = new mongoose.Schema({
     maxlength: 5000
   },
   images: [{
-    type: String,
-    validate: {
-      validator: function(v) {
-        return /^https?:\/\/\S+$/.test(v);
-      },
-      message: props => `${props.value} is not a valid URL!`
-    }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ImageModel'
   }],
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'UserModel'
   }],
   comments: [{
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'UserModel',
       required: true
     },
     content: {

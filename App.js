@@ -4,6 +4,8 @@ import "dotenv/config";
 import UserRoutes from "./Users/routes.js";
 import cors from "cors";
 import session from "express-session";
+import PostsRoutes from "./Posts/routes.js";
+import UploadRoutes from "./routes.js";
 
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/5610-proj";
 mongoose.connect(CONNECTION_STRING);
@@ -14,6 +16,7 @@ const corsOptions = {
   origin: process.env.NETLIFY_URL || "http://localhost:3000", // restrict cross-origin resource
 };
 app.use(cors(corsOptions)); // Use CORS right after creating the app
+app.use("uploads", express.static("./uploads"))
 
 const sessionOptions = { // configure server sessions after cors
   secret: process.env.SESSION_SECRET || "5610-proj", // default session options
@@ -35,5 +38,7 @@ app.use(
 app.use(express.json());
 
 UserRoutes(app);
+UploadRoutes(app);
+PostsRoutes(app);
 
 app.listen(process.env.PORT || 4000);

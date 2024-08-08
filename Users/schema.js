@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
       unique: true,
       trim: true
     },
@@ -19,12 +18,10 @@ const userSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      required: true,
       trim: true
     },
     lastName: {
       type: String,
-      required: true,
       trim: true
     },
     profilePicture: {
@@ -52,31 +49,37 @@ const userSchema = new mongoose.Schema(
     },
     followers: [{
       type: mongoose.Types.ObjectId,
+      ref: 'UserModel',
       default: '',
       trim: true
     }],
     following: [{
       type: mongoose.Types.ObjectId,
+      ref: 'UserModel',
       default: '',
       trim: true
     }],
     posts: [{
       type: mongoose.Types.ObjectId,
+      ref: 'PostModel',
       default: '',
       trim: true
     }],
     likes: [{
       type: mongoose.Types.ObjectId,
+      ref: 'UserModel',
       default: '',
       trim: true
     }],
     reviews: [{
       type: mongoose.Types.ObjectId,
+      ref: 'UserModel',
       default: '',
       trim: true
     }],
     comments: [{
       type: mongoose.Types.ObjectId,
+      ref: 'UserModel',
       default: '',
       trim: true
     }],
