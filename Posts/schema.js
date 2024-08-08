@@ -51,9 +51,6 @@ const PostSchema = new mongoose.Schema({
 },
 {collection : "posts"});
 
-// PostSchema.pre('save', function(next) {
-//   this.updatedAt = Date.now();
-//   next();
-// });
+
 
 export default PostSchema;

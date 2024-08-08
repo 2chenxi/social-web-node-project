@@ -157,3 +157,17 @@ export default function PostsRoutes(app) {
   app.post('/api/posts/:pid/share', incrementShareCount);
   app.get('/api/posts/search', findPostsByContent);
 }
+
+
+  // app.post("/api/posts", createPost);
+  // app.get("/api/posts", findAllPosts);
+  // app.get("/api/posts/:postId", findPostById);
+  // app.get("/api/users/:userId/posts", findPostsByUser);
+  // app.put("/api/posts/:postId", updatePost);
+  // app.delete("/api/posts/:postId", deletePost);
+  // app.post("/api/posts/:postId/like", likePost);
+  // app.post("/api/posts/:postId/unlike", unlikePost);
+  // app.post("/api/posts/:postId/comment", addComment);
+  // app.delete("/api/posts/:postId/comment/:commentId", removeComment);
+  // app.post("/api/posts/:postId/share", incrementShareCount);
+  // app.get("/api/posts/search/:content", findPostsByContent);
