@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -72,10 +73,20 @@ const userSchema = new mongoose.Schema(
       trim: true
     }],
     reviews: [{
-      type: mongoose.Types.ObjectId,
-      ref: 'UserModel',
-      default: '',
-      trim: true
+      post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PostModel',
+        required: true
+      },
+      reviewContent: {
+        type: String,
+        required: true,
+        maxlength: 1000
+      },
+      reviewedAt: {
+        type: Date,
+        default: Date.now
+      }
     }],
     comments: [{
       type: mongoose.Types.ObjectId,
@@ -94,4 +105,5 @@ const userSchema = new mongoose.Schema(
   },
   { collection: "users" }
 );
+const userModel = mongoose.model('User', userSchema);
 export default userSchema;

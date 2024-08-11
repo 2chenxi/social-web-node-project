@@ -42,6 +42,30 @@ export default function UserRoutes(app) {
     }
   }
 
+  const findUsersFollowers = async (req, res) => {
+    try {
+      const user = await dao.findUserById(req.params.userId).populate('followers', 'username profilePicture');
+      console.log(user);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(user.followers);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  const getUserReviewedPosts = async (req, res) => {
+    try {
+      const reviewedPosts = await getUserReviewedPosts(req.params.uid);
+      res.status(200).json(reviewedPosts);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  
+
   const updateUser = async (req, res) => {
     const { userId } = req.params;
     const status = await dao.updateUser(userId, req.body);
@@ -89,6 +113,8 @@ export default function UserRoutes(app) {
   app.get("/api/users", findAllUsers);
   app.get("/api/users/:userId", findUserById);
   app.get("/api/users/:userId/followings", findUsersFollowings);
+  app.get("/api/users/:userId/followers", findUsersFollowers);
+  app.get('/api/users/:userId/reviews', getUserReviewedPosts);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
   app.post("/api/users/signup", signup);
