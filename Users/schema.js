@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true
     },
+    role: {
+      type: String,
+      enum: ["USER", "COMPANY", "ADMIN"],
+      default: "USER",
+    },
     profilePicture: {
       type: String,
       default: ''
@@ -78,15 +83,15 @@ const userSchema = new mongoose.Schema(
         ref: 'PostModel',
         required: true
       },
-      reviewContent: {
-        type: String,
-        required: true,
-        maxlength: 1000
-      },
-      reviewedAt: {
-        type: Date,
-        default: Date.now
-      }
+      // reviewContent: {
+      //   type: String,
+      //   required: true,
+      //   maxlength: 1000
+      // },
+      // reviewedAt: {
+      //   type: Date,
+      //   default: Date.now
+      // }
     }],
     comments: [{
       type: mongoose.Types.ObjectId,
