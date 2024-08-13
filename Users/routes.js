@@ -32,7 +32,7 @@ export default function UserRoutes(app) {
   const findUsersFollowings = async (req, res) => {
     try {
       const user = await dao.findUserById(req.params.userId).populate('following', 'username profilePicture');
-      console.log(user);
+      // console.log(user);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }

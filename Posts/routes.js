@@ -1,5 +1,6 @@
 import * as dao from './dao.js'; // Adjust path as necessary
 import upload from '../Imgs/upload.js'; // Adjust path as necessary
+import axios from 'axios';
 
 export default function PostsRoutes(app) {
 
@@ -32,12 +33,34 @@ export default function PostsRoutes(app) {
   const findAllPosts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = parseInt(req.query.skip) || 0;
+    const { content } = req.query;
+
     try {
-      const posts = await dao.findAllPosts(limit, skip);
-      res.status(200).json(posts);
+      if (content) {
+        const posts = await dao.findPostsByContent(content);
+        if (posts.length > 0) {
+          res.json({ source: "posts", data: posts });
+          return;
+        } else {
+          const response = await axios.get('https://www.googleapis.com/customsearch/v1', {
+            params: {
+              key: process.env.GOOGLE_SEARCH_API_KEY,
+              cx: process.env.GOOGLE_SEARCH_ENGINE_ID,
+              q: content,
+            },
+          });
+          res.json({ source: "google", data: response.data.items });
+        }
+      }
+      else {
+        const posts = await dao.findAllPosts(limit, skip);
+        res.json(posts);
+      }
+      
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+
   };
 
   const findPostById = async (req, res) => {
@@ -137,7 +160,7 @@ export default function PostsRoutes(app) {
 
   const findPostsByContent = async (req, res) => {
     try {
-      const posts = await dao.findPostsByContent(req.query.q);
+      const posts = await dao.findPostsByContent(req.query.content);
       res.status(200).json(posts);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -155,7 +178,7 @@ export default function PostsRoutes(app) {
   app.post('/api/posts/:pid/comment', addComment);
   app.delete('/api/posts/:pid/comment/:cid', removeComment);
   app.post('/api/posts/:pid/share', incrementShareCount);
-  app.get('/api/posts/search', findPostsByContent);
+  // app.get('/api/posts', findPostsByContent);
 }
 
 
