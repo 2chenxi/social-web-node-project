@@ -42,6 +42,29 @@ export default function UserRoutes(app) {
     }
   }
 
+  const findUsersFollowers = async (req, res) => {
+    try {
+      const user = await dao.findUserById(req.params.userId).populate('followers', 'username profilePicture');
+      console.log(user);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(user.followers);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  const getUserReviewedPosts = async (req, res) => {
+    try {
+      const reviews = await dao.findReviewedPostsByUser(req.params.userId);
+      res.json(reviews);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+
   const updateUser = async (req, res) => {
     const { userId } = req.params;
     const status = await dao.updateUser(userId, req.body);
@@ -84,15 +107,49 @@ export default function UserRoutes(app) {
     }
     res.json(currentUser);
    };
+
+   const followUser = async (req, res) => {
+    try {
+      const { loggedInUserId, profileUserId } = req.params;
+      const [updatedLoggedInUser, updatedProfileUser] = await Promise.all([
+        dao.addFollowing(loggedInUserId, profileUserId),
+        dao.addFollower(profileUserId, loggedInUserId)
+      ]);
+      res.json({ updatedLoggedInUser, updatedProfileUser });
+    } catch (error) {
+      console.error('Error in followUser:', error);
+      res.status(500).json({ message: error.message });
+    }
+  };
+
+  const unfollowUser = async (req, res) => {
+    try {
+      const { loggedInUserId, profileUserId } = req.params;
+      const [updatedLoggedInUser, updatedProfileUser] = await Promise.all([
+        dao.removeFollowing(loggedInUserId, profileUserId),
+        dao.removeFollower(profileUserId, loggedInUserId)
+      ]);
+      res.json({ updatedLoggedInUser, updatedProfileUser });
+    } catch (error) {
+      console.error('Error in unfollowUser:', error);
+      res.status(500).json({ message: error.message });
+    }
+  };
   
   app.post("/api/users", createUser);
   app.get("/api/users", findAllUsers);
   app.get("/api/users/:userId", findUserById);
   app.get("/api/users/:userId/followings", findUsersFollowings);
+  app.get("/api/users/:userId/followers", findUsersFollowers);
+  app.get('/api/users/:userId/reviews', getUserReviewedPosts);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
   app.post("/api/users/signup", signup);
   app.post("/api/users/signin", signin);
   app.post("/api/users/signout", signout);
   app.post("/api/users/profile", profile);
+  app.post("/api/users/:loggedInUserId/following/:profileUserId", followUser);
+  app.delete("/api/users/:loggedInUserId/following/:profileUserId", unfollowUser);
+  app.post("/api/users/:profileUserId/followers/:loggedInUserId", followUser);
+  app.delete("/api/users/:profileUserId/followers/:loggedInUserId", unfollowUser);
 }
