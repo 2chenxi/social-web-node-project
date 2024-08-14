@@ -141,11 +141,22 @@ export default function PostsRoutes(app) {
   };
 
   const removeComment = async (req, res) => {
+    const { pid: postId } = req.params;
+    const { content: commentContent } = req.body;
+  
+    if (!commentContent) {
+      return res.status(400).json({ message: 'Comment content is required' });
+    }
+  
     try {
-      await dao.removeComment(req.params.pid, req.params.cid);
+      await dao.removeComment(postId, commentContent);
       res.status(200).json({ message: 'Comment removed successfully' });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      if (error.message === 'Comment not found or already removed') {
+        res.status(404).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+      }
     }
   };
 
@@ -176,7 +187,7 @@ export default function PostsRoutes(app) {
   app.post('/api/posts/:pid/like', likePost);
   app.post('/api/posts/:pid/unlike', unlikePost);
   app.post('/api/posts/:pid/comment', addComment);
-  app.delete('/api/posts/:pid/comment/:cid', removeComment);
+  app.delete('/api/posts/:pid/comment', removeComment);
   app.post('/api/posts/:pid/share', incrementShareCount);
   // app.get('/api/posts', findPostsByContent);
 }

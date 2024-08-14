@@ -90,11 +90,23 @@ export const addComment = (postId, comment) =>
   );
 
 // Function to remove a comment from a post
-export const removeComment = (postId, commentId) => 
-  postModel.updateOne(
-    { _id: postId },
-    { $pull: { comments: { _id: commentId } } }
-  );
+export const removeComment = async (postId, commentContent) => {
+  try {
+    const result = await postModel.updateOne(
+      { _id: postId },
+      { $pull: { comments: { content: commentContent } } }
+    );
+    
+    if (result.nModified === 0) {
+      throw new Error('Comment not found or already removed');
+    }
+    
+    return result;
+  } catch (error) {
+    console.error('Error removing comment:', error);
+    throw error;
+  }
+};
 
 // Function to increment the share count of a post
 export const incrementShareCount = (postId) => 
